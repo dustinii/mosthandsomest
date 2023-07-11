@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dev Quiz</title>
+    <link rel="stylesheet" href="./assets/css/main.css" />
+  </head>
+
+  <body>
+    <div id="quiz-container">
+      <div id="quiz-start" class="quiz-view">
+        <h1>Welcome to the Dev Quiz!</h1>
+        <p>Test your coding knowledge against the clock! CAUTION, incorrect answers will reduce your time by 20 seconds!</p>
+        <button id="quiz-start-btn">Start Quiz</button>
+      </div>
+
+      <div id="quiz-questions" class="quiz-view hide">
+        <div id="quiz-timer">Time: <span id="quiz-time">0</span></div>
+        <h2 id="quiz-question-title"></h2>
+        <div id="quiz-choices" class="quiz-choices"></div>
+      </div>
+
+      <div id="quiz-end" class="quiz-view hide">
+        <h2>Quiz Finished!</h2>
+        <p>Your final score is <span id="quiz-final-score"></span>.</p>
+        <p>
+          Enter initials: <input type="text" id="quiz-initials" max="3" />
+          <button id="quiz-submit">Submit</button>
+        </p>
+      </div>
+
+      <div id="quiz-feedback" class="quiz-feedback hide"></div>
+    </div>
+
+    <script src="./assets/js/questions.js"></script>
+    <script src="./assets/js/app.js"></script>
+  </body>
+</html>
