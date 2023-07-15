@@ -1,39 +1,69 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Dev Quiz</title>
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Coding Quiz</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <link rel="stylesheet" href="./assets/css/main.css" />
-  </head>
+</head>
 
-  <body>
-    <div id="quiz-container">
-      <div id="quiz-start" class="quiz-view">
-        <h1>Welcome to the Dev Quiz!</h1>
-        <p>Test your coding knowledge against the clock! CAUTION, incorrect answers will reduce your time by 20 seconds!</p>
-        <button id="quiz-start-btn">Start Quiz</button>
-      </div>
+<body>
+    <section class="section">
+        <div class="container">
+            <!-- Navbar with Scores and Timer -->
+            <nav class="level">
+                <p class="level-left">
+                    <a class="button is-primary" href="leaderboard.html">Leaderboard</a>
+                </p>
+                <p class="level-right">
+                    <span class="tag is-primary is-medium">Time: <span id="time">0</span></span>
+                </p>
+            </nav>
 
-      <div id="quiz-questions" class="quiz-view hide">
-        <div id="quiz-timer">Time: <span id="quiz-time">0</span></div>
-        <h2 id="quiz-question-title"></h2>
-        <div id="quiz-choices" class="quiz-choices"></div>
-      </div>
+            <!-- Quiz Prompt -->
+            <div id="startScreen" class="content has-text-centered">
+                <h1 class="title has-text-centered">Javascript Concepts Quiz</h1>
+                <p>
+                    This is a multiple choice test to see how well you know Javascript concepts. </br>You will have 105
+                    seconds to answer 7 questions. For each incorrect answer, 10 seconds will be deducted from the
+                    timer. </br>Your final score will be the time remaining on the timer.</br> Good luck!
+                </p>
+                <button id="start" class="button is-success">Start!</button>
+            </div>
 
-      <div id="quiz-end" class="quiz-view hide">
-        <h2>Quiz Finished!</h2>
-        <p>Your final score is <span id="quiz-final-score"></span>.</p>
-        <p>
-          Enter initials: <input type="text" id="quiz-initials" max="3" />
-          <button id="quiz-submit">Submit</button>
-        </p>
-      </div>
+            <!-- Questions Container -->
+            <div id="questions" class="is-hidden">
+                <div class="columns is-centered">
+                    <div class="column is-half">
+                        <h2 id="questionText" class="has-text-centered"></h2>
+                        <div id="choices" class="choices"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Answer Feedback -->
+            <div id="feedback" class="notification is-hidden"></div>
 
-      <div id="quiz-feedback" class="quiz-feedback hide"></div>
-    </div>
-
-    <script src="./assets/js/questions.js"></script>
+            <!-- Score Submission -->
+            <div id="scoreScreen" class="content has-text-centered is-hidden">
+                <h2 class="title">All done!</h2>
+                <p>Your final score is <span id="finalScore"></span>.</p>
+                <div class="field is-grouped is-grouped-centered">
+                    <p class="control">
+                        <input class="input is-medium" type="text" id="initials" max="3" placeholder="Enter initials">
+                    </p>
+                    <p class="control">
+                        <button id="submit" class="button is-success">Submit</button>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script src="./assets/js/data.js"></script>
     <script src="./assets/js/app.js"></script>
-  </body>
+</body>
+
 </html>
