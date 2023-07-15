@@ -1,0 +1,9 @@
+#questions {
+    padding: 20px;
+    border-radius: 5px;
+}
+
+#question-title {
+    font-size: 24px;
+    font-weight: bold;
+}
