@@ -57,7 +57,7 @@ $ git clone https://github.com/dustinii/quizzer.git
 6. Enter your initials to save your score to the high score list.
 
 ## Deployed Application
-
+[Javascript Quizzer](https://dustinii.github.io/quizzer/)
 
 ## License
 
