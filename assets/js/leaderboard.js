@@ -1,3 +1,4 @@
+// Function to fetch and display the scores from local storage
 function showLeaderboard() {
     const scores = JSON.parse(localStorage.getItem('scores')) || [];
     scores.sort((a, b) => b.score - a.score);
@@ -11,10 +12,12 @@ function showLeaderboard() {
     });
 }
 
+// Function to clear all saved scores from local storage
 function clearLeaderboard() {
     localStorage.removeItem('scores');
     window.location.reload();
 }
 
+// Attach event listeners and invoke initial functions
 document.getElementById('erase').onclick = clearLeaderboard;
 showLeaderboard();

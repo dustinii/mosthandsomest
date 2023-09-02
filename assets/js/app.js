@@ -1,4 +1,4 @@
-// DOM elements to interact with
+// DOM elements for quiz interface
 const startButton = document.getElementById('start');
 const timeDisplay = document.getElementById('time');
 const submitButton = document.getElementById('submit');
@@ -7,15 +7,12 @@ const choiceContainer = document.getElementById('choices');
 const feedbackDisplay = document.getElementById('feedback');
 const initialsInput = document.getElementById('initials');
 
-// variable to hold time left
+// Quiz state variables
 let timerID;
-
-// keep track of shuffled questions index
 let questionIndex = 0;
-
-// keep track of time
 let remainingTime = 105;
 
+// Function to shuffle question order (Fisher-Yates algorithm)
 function shuffleQuestions(questionArray) {
     for (let i = questionArray.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -24,7 +21,7 @@ function shuffleQuestions(questionArray) {
     return questionArray;
 }
 
-
+// Function to initialize quiz
 function startQuiz() {
     document.getElementById('startScreen').setAttribute('class', 'is-hidden');
     startButton.classList.add('is-hidden');
@@ -38,7 +35,7 @@ function startQuiz() {
     displayQuestion();
 }
 
-
+// Function to populate question and choices to the UI
 function displayQuestion() {
     const currentQuestion = questions[questionIndex];
     document.getElementById('questionText').textContent = currentQuestion.title;
@@ -52,6 +49,7 @@ function displayQuestion() {
     });
 }
 
+// Event handler to check if user's answer is correct or not
 function processChoice(event) {
     if (!event.target.matches('.button')) return;
     feedbackDisplay.classList.remove('is-danger', 'is-success');
@@ -74,7 +72,7 @@ function processChoice(event) {
     else displayQuestion();
 }
 
-
+// Function to handle actions when the quiz is over
 function endQuiz() {
     clearInterval(timerId);
     document.getElementById('scoreScreen').classList.remove('is-hidden');
@@ -83,6 +81,7 @@ function endQuiz() {
     submitButton.classList.remove('is-hidden');
 }
 
+// Updates the timer and checks if time is up
 function updateTimer() {
     remainingTime--;
     timeDisplay.textContent = remainingTime;
@@ -90,6 +89,7 @@ function updateTimer() {
     if (remainingTime <= 0) endQuiz();
 }
 
+// Changes the color of timer based on remaining time
 function updateTimerColor() {
     const parentElement = timeDisplay.parentElement;
     parentElement.classList.remove('is-primary', 'is-warning', 'is-danger');
@@ -98,6 +98,7 @@ function updateTimerColor() {
     else parentElement.classList.add('is-danger');
 }
 
+// Stores user's score with initials in local storage
 function saveScore() {
     const userInitials = initialsInput.value.trim();
     if (userInitials !== '') {
@@ -108,11 +109,13 @@ function saveScore() {
         window.location.href = 'leaderboard.html';
     }
 }
-// End of App messes up without this function
+
+// Helper function to handle 'Enter' key press for score submission
 function handleEnterKey(event) {
     if (event.key === 'Enter') saveScore();
 }
 
+// Event listeners for buttons and UI actions
 submitButton.onclick = saveScore;
 startButton.onclick = startQuiz;
 choiceContainer.onclick = processChoice;
