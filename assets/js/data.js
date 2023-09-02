@@ -50,7 +50,7 @@ var questions = [
         answer: '124'
     },
     {
-        title: 'What will be the output of the following JavaScript code? <br><br>var x = 1; <br>if (function f(){}) { <br> x += typeof f; <br> } <br> console.log(x);',
+        title: 'What will be the output of the following JavaScript code? var x = 1; if (function f(){}) { x += typeof f; }  console.log(x);',
         choices: ['1undefined', '1function', 'NaN', 'undefined'],
         answer: '1undefined'
     },
@@ -60,12 +60,12 @@ var questions = [
         answer: 'default'
     },
     {
-        title: 'What will be the output of the following JavaScript code? <br><br>var x = 5; <br>console.log(x === 5 ? "true" : "false");',
+        title: 'What will be the output of the following JavaScript code? var x = 5; console.log(x === 5 ? "true" : "false");',
         choices: ['true', 'false', 'NaN', 'TypeError'],
         answer: 'true'
     },
     {
-        title: 'What will be the output of the following JavaScript code? <br><br>console.log(null == undefined);',
+        title: 'What will be the output of the following JavaScript code? console.log(null == undefined);',
         choices: ['true', 'false', 'null', 'undefined'],
         answer: 'true'
     },

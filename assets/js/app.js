@@ -1,4 +1,4 @@
-// DOM elements
+// DOM elements to interact with
 const startButton = document.getElementById('start');
 const timeDisplay = document.getElementById('time');
 const submitButton = document.getElementById('submit');
@@ -7,8 +7,8 @@ const choiceContainer = document.getElementById('choices');
 const feedbackDisplay = document.getElementById('feedback');
 const initialsInput = document.getElementById('initials');
 
-// holds the remaining time interval
-let timerTracker;
+// variable to hold time left
+let timerID;
 
 // keep track of shuffled questions index
 let questionIndex = 0;
@@ -16,30 +16,104 @@ let questionIndex = 0;
 // keep track of time
 let remainingTime = 105;
 
-function shuffleQuestions(){
-    return questionArray
+function shuffleQuestions(questionArray) {
+    for (let i = questionArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [questionArray[i], questionArray[j]] = [questionArray[j], questionArray[i]];
+    }
+    return questionArray;
 }
 
-function startQuiz(){
+
+function startQuiz() {
+    document.getElementById('startScreen').setAttribute('class', 'is-hidden');
+    startButton.classList.add('is-hidden');
+    questions = shuffleQuestions(questions);
+    questions = questions.slice(0, 7);
+    remainingTime = questions.length * 15;
+    questionContainer.classList.remove('is-hidden');
+    submitButton.classList.add('is-hidden');
+    timerId = setInterval(updateTimer, 1000);
+    timeDisplay.textContent = remainingTime;
     displayQuestion();
 }
 
-function displayQuestion(){}
 
-function answerSelected(){}
+function displayQuestion() {
+    const currentQuestion = questions[questionIndex];
+    document.getElementById('questionText').textContent = currentQuestion.title;
+    choiceContainer.innerHTML = '';
+    currentQuestion.choices.forEach((choice, i) => {
+        const choiceButton = document.createElement('button');
+        choiceButton.classList.add('button', 'is-primary', 'is-fullwidth', 'my-1');
+        choiceButton.setAttribute('value', choice);
+        choiceButton.textContent = `${i + 1}. ${choice}`;
+        choiceContainer.appendChild(choiceButton);
+    });
+}
 
-function endQuiz(){}
+function processChoice(event) {
+    if (!event.target.matches('.button')) return;
+    feedbackDisplay.classList.remove('is-danger', 'is-success');
 
-function updateTime(){}
+    if (event.target.value !== questions[questionIndex].answer) {
+        feedbackDisplay.classList.add('is-danger');
+        feedbackDisplay.textContent = 'Wrong!';
+        remainingTime -= 15;
 
-function updateTimerColor(){}
+        if (remainingTime < 0) remainingTime = 0;
+        timeDisplay.textContent = remainingTime;
+    } else {
+        feedbackDisplay.classList.add('is-success');
+        feedbackDisplay.textContent = 'Correct!';
+    }
+    feedbackDisplay.classList.remove('is-hidden');
+    setTimeout(() => feedbackDisplay.classList.add('is-hidden'), 1000);
+    questionIndex++;
+    if (remainingTime <= 0 || questionIndex === questions.length) endQuiz();
+    else displayQuestion();
+}
 
-function saveScore(){}
 
+function endQuiz() {
+    clearInterval(timerId);
+    document.getElementById('scoreScreen').classList.remove('is-hidden');
+    document.getElementById('finalScore').textContent = remainingTime;
+    questionContainer.classList.add('is-hidden');
+    submitButton.classList.remove('is-hidden');
+}
+
+function updateTimer() {
+    remainingTime--;
+    timeDisplay.textContent = remainingTime;
+    updateTimerColor();
+    if (remainingTime <= 0) endQuiz();
+}
+
+function updateTimerColor() {
+    const parentElement = timeDisplay.parentElement;
+    parentElement.classList.remove('is-primary', 'is-warning', 'is-danger');
+    if (remainingTime >= 60) parentElement.classList.add('is-primary');
+    else if (remainingTime >= 20) parentElement.classList.add('is-warning');
+    else parentElement.classList.add('is-danger');
+}
+
+function saveScore() {
+    const userInitials = initialsInput.value.trim();
+    if (userInitials !== '') {
+        const scores = JSON.parse(window.localStorage.getItem('scores')) || [];
+        const newScore = { score: remainingTime, initials: userInitials };
+        scores.push(newScore);
+        window.localStorage.setItem('scores', JSON.stringify(scores));
+        window.location.href = 'leaderboard.html';
+    }
+}
 // End of App messes up without this function
-function handleEnterKey(event){}
+function handleEnterKey(event) {
+    if (event.key === 'Enter') saveScore();
+}
 
 submitButton.onclick = saveScore;
 startButton.onclick = startQuiz;
-choiceContainer.onclick = answerSelected;
+choiceContainer.onclick = processChoice;
 initialsInput.onkeyup = handleEnterKey;

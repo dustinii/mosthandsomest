@@ -4,10 +4,10 @@ function showLeaderboard() {
     const scoresList = document.getElementById('leaderboard');
 
     scores.forEach(score => {
-        const scoreLi = document.createElement('li');
-        scoreLi.classlist.add('list-item', 'has-background-light');
-        scoreLi.textContent = `${scores.initials} - ${scores.score}`;
-        scoreLi.appendChild(scoreLi);
+        const scoreListItem = document.createElement('li');
+        scoreListItem.classList.add('list-item', 'has-background-light', 'mb-2', 'p-2');
+        scoreListItem.textContent = `${score.initials} - ${score.score}`;
+        scoresList.appendChild(scoreListItem);
     });
 }
 
@@ -17,4 +17,4 @@ function clearLeaderboard() {
 }
 
 document.getElementById('erase').onclick = clearLeaderboard;
-displayHighScores();
+showLeaderboard();
