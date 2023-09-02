@@ -7,6 +7,7 @@ The Coding Quizzer is an interactive game that runs in the browser. The user is 
 ## Table of Contents
 
 - [General Info](#general-info)
+- [Features](#features)
 - [Technologies](#technologies)
 - [Installation](#installation)
 - [Usage](#usage)
